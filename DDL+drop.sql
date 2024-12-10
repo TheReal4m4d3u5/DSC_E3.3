@@ -252,38 +252,39 @@ VALUES
 
 
 
+UPDATE student
+SET tot_cred = 120
+WHERE ID = '12345';
+
+-- a. Increase the salary of each instructor in the Comp. Sci. department by 10%.
+
+UPDATE instructor
+SET salary = salary * 1.10
+WHERE dept_name = 'Comp. Sci.';
 
 
--- a. Find the total grade-points earned by the student with ID 12345, across all courses taken by the student.
-SELECT
-	SUM(course.credits * grade_points.points) AS total_grade_points
-FROM
-	takes
-	JOIN course ON takes.course_id = course.course_id
-	JOIN grade_points ON takes.grade = grade_points.grade
-WHERE
-	takes.ID = '12345';
+-- b. Delete all courses that have never been offered (i.e., do not occur in the
 
--- b. Find the grade-point average (GPA) for the above student, that is, the total grade-points 
--- divided by the total credits for the associated courses.
-SELECT
-	SUM(course.credits * grade_points.points) / SUM(course.credits) AS GPA
-FROM
-	takes
-	JOIN course ON takes.course_id = course.course_id
-	JOIN grade_points ON takes.grade = grade_points.grade
-WHERE
-	takes.ID = '12345';
+DELETE FROM course
+WHERE course_id NOT IN (
+    SELECT DISTINCT course_id
+    FROM section
+);
 
--- c. Find the ID and the grade-point average of every student.
-SELECT
-	takes.ID,
-	SUM(course.credits * grade_points.points) / SUM(course.credits) AS GPA
-FROM
-	takes
-	JOIN course ON takes.course_id = course.course_id
-	JOIN grade_points ON takes.grade = grade_points.grade
-GROUP BY
-	takes.ID;
 
-RESET client_min_messages;
+
+-- c. Insert every student whose tot_cred attribute is greater than 100 as an 
+--    instructor in the same department with a salary of $40,000.
+
+
+
+INSERT INTO instructor (ID, name, dept_name, salary)
+SELECT 
+    ID,
+    name,
+    dept_name,
+    40000.00
+FROM 
+    student
+WHERE 
+    tot_cred > 100;
