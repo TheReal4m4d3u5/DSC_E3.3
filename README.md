@@ -1,4 +1,4 @@
-# E3.3DSC
+# DSC_E3.3
 
 # 3.3 Write the following inserts, deletes, or updates in SQL, using the university schema.
 # a. Increase the salary of each instructor in the Comp. Sci. department by 10%.
