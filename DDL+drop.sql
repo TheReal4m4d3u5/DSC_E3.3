@@ -251,33 +251,25 @@ VALUES
 	('12345', 'CS101', 'S1', 'Fall', 2009, 'A');
 
 
-
 UPDATE student
 SET tot_cred = 120
 WHERE ID = '12345';
 
 -- a. Increase the salary of each instructor in the Comp. Sci. department by 10%.
-
 UPDATE instructor
 SET salary = salary * 1.10
 WHERE dept_name = 'Comp. Sci.';
 
 
 -- b. Delete all courses that have never been offered (i.e., do not occur in the
-
 DELETE FROM course
 WHERE course_id NOT IN (
     SELECT DISTINCT course_id
     FROM section
 );
 
-
-
 -- c. Insert every student whose tot_cred attribute is greater than 100 as an 
 --    instructor in the same department with a salary of $40,000.
-
-
-
 INSERT INTO instructor (ID, name, dept_name, salary)
 SELECT 
     ID,
